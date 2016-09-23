@@ -49,43 +49,42 @@
 	}
 
 	function showResults(searchResults) {
-		var movieObject;
+		var elementForResult;
 	    // if there are results at all...
 	    if (searchResults) {
 
 	    	// perform the following for each result
 	      searchResults.forEach(function (movie) {
-	        movieObject = document.createElement('li');
+	      	elementForResult = document.createElement('li');
 
 	        // adding the title to the list of results
-	        movieObject.innerHTML = movie['Title'] + " (" + movie['Year'] + ")";
-	        movieObject.setAttribute('class', 'results-list');
-	        movieObject.addEventListener('click', function() {
+	        elementForResult.innerHTML = movie['Title'] + " (" + movie['Year'] + ")";
+	        elementForResult.setAttribute('class', 'results-list');
+	        elementForResult.addEventListener('click', function() {
 	        	getMovieDetails(movie);
 	        });
 
 	        // appending the html block to the results-list section
-	        resultsList.appendChild(movieObject);
-
+	        resultsList.appendChild(elementForResult);
 	      });
 
 	    // if there are no results
 	    } else {
 	      // NB: p is used here because it is styled differently than a li
-	      movieObject = document.createElement('p');
-	      movieObject.innerHTML = "Please try again";
+	      elementForResult = document.createElement('p');
+	      elementForResult.innerHTML = "Please try again";
 	      resultsList.appendChild();
 	    }
 	}
 
 	function getMovieDetails(movieObject) {
-		selectedMovie["title"] = movieObject["Title"];
-		selectedMovie["year"] = movieObject["Year"];
-		selectedMovie["imdbID"] = movieObject["imdbID"];
+		// set properties on global object selectedMovie
+		selectedMovie.title = movieObject.Title;
+		selectedMovie.year = movieObject.Year;
+		selectedMovie.imdbID = movieObject.imdbID;
 
-		console.log("hi")
 		// display the title of the movie
-		movieTitle.innerHTML = selectedMovie['title'] + ' (' + selectedMovie['year'] + ')';
+		movieTitle.innerHTML = selectedMovie.title + ' (' + selectedMovie.year + ')';
 		
 		// clear previous result
 		movieDetailsList.innerHTML = "";
@@ -96,8 +95,8 @@
 
 		xmlHttpRequest.onreadystatechange = function() {
         if (xmlHttpRequest.readyState == XMLHttpRequest.DONE && xmlHttpRequest.status == 200) {
-          searchResults = JSON.parse(xmlHttpRequest.response);
-          displayMovieDetails(searchResults);
+          var jsonObject = JSON.parse(xmlHttpRequest.response);
+          displayMovieDetails(jsonObject);
         }
     };
     xmlHttpRequest.open("GET", fullURL, true);
@@ -110,7 +109,6 @@
 			// rows
 			var movieDetailsRow = document.createElement('tr');
 			movieDetailsList.appendChild(movieDetailsRow);
-
 			// cells for key and value
 			var movieDetailsKeyCell = document.createElement('td'),
 				movieDetailsValueCell = document.createElement('td'),
@@ -146,8 +144,14 @@
 		var xmlHttpRequest = new XMLHttpRequest;
 		xmlHttpRequest.onreadystatechange = function() {
 	        if (xmlHttpRequest.readyState == XMLHttpRequest.DONE && xmlHttpRequest.status == 200) {
-	          favoritedMovies = JSON.parse(xmlHttpRequest.response);
-	          showResults(favoritedMovies);
+	          var favoritedMovies = JSON.parse(xmlHttpRequest.response);
+	          if (favoritedMovies) {
+	          	console.log(favoritedMovies);
+	          	showResults(favoritedMovies);	
+	          } else {
+	          	alert('Add some favorites!');
+	          }
+	          
 	        }
 	    };
 	    xmlHttpRequest.open("GET", "/favorites", true);
