@@ -1,0 +1,88 @@
+/* Common Styles */
+body {
+  margin: 30px;
+  font-family: Helvetica, sans-serif;
+  font-size: 12px;
+}
+
+div {
+  border-radius: 7px;
+}
+
+table, tr, td {
+  border: 1px, solid, grey;
+  border-collapse: collapse;
+}
+
+.header {
+  width: 90%;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#text-field {
+  width: 80%;
+  height: 25px;
+  border: 1px solid grey;
+  display: inline-block;
+}
+
+/*NOT WORKING???*/
+#buttons {
+  display: inline;
+  width: 250px;
+  height: 2em;
+  margin-left: 20px;
+  margin-right: 20px;
+  font-size: 18px;
+}
+
+.left {
+  
+  border: 1px solid blue;
+  width: 25%;
+  min-height: 700px;
+  float: left;
+  padding-left: 5px;
+}
+
+.right {
+  border: 1px dashed red;
+  display: inline-block;
+  width: 55%;
+  min-height: 700px;
+  float: left;
+  margin-left: 20px;
+}
+
+/*NOT WORKING!!!*/
+.right button {
+  text-align: center;
+  display: inline-block;
+}
+
+ul {
+  padding: 5px;
+}
+
+li {
+  margin-bottom: 7px;
+}
+
+.left li:hover{
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+}
+
+#results-list {
+  list-style-type: none;
+}
+
+#movie-title {
+  text-align: center;
+}
+
+
+
+
