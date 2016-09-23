@@ -10,6 +10,8 @@
 			movieDetailsList = document.getElementById('movie-details'),
 			apiURLPrefix = 'https://www.omdbapi.com/?s=';
 
+	var selectedMovie = {};
+
 	// make sure buttons are found, if so 
 	// add event listener, which will detect clicks from the user
 	// and then perform the associated function
@@ -77,16 +79,18 @@
 	}
 
 	function showMovieDetails(movieObject) {
-		// TO DO: not displaying ALL movie data, but do another query with imbdID
-
-		console.log(movieObject);
+		selectedMovie["name"] = movieObject["Title"];
+		selectedMovie["year"] = movieObject["Year"];
+		selectedMovie["imdbID"] = movieObject["imdbID"];
 
 		// display the title of the movie
-		movieTitle.innerHTML = movieObject['Title'] + ' (' + movieObject['Year'] + ')';
+		movieTitle.innerHTML = selectedMovie['Title'] + ' (' + selectedMovie['Year'] + ')';
 		
 		// clear previous result
 		movieDetailsList.innerHTML = "";
 
+		// TO DO: not displaying ALL movie data, but do another query with imbdID
+		
 		//create table row for each piece of data
 		for (var key in movieObject) {
 
@@ -106,13 +110,22 @@
 		}
 	}
 
-	function clearResultsList() {
-		resultsList.innerHTML = "";
-	}
+	function addToFavorites(movieObject) {
+		var xmlHttpRequest = new XMLHttpRequest
 
+		xmlHttpRequest.onreadystatechange = function() {
+	    	if (xmlHttpRequest.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+	        	var response = JSON.parse(xmlHttpRequest.responseText);
+		        if (response.error == "duplicate") {
+		          alert(title + " has already been added to your list of favorites!");
+		        }
+		    }
+	    }
 
-	function addToFavorites() {
-
+	    xmlHttpRequest.open("POST", '/favorites', true);
+	    xmlHttpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	    var data = "&oid=" + movieObject.imdbID;
+	    xmlHttpRequest.send(data);
 	}
 
 
@@ -126,6 +139,11 @@
 	    };
 	    xmlHttpRequest.open("GET", "/favorites", true);
 	    xmlHttpRequest.send();
+	}
+
+
+	function clearResultsList() {
+		resultsList.innerHTML = "";
 	}
 
 	// function showFavorites(favoritedMovies) {
