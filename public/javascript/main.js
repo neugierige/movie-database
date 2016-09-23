@@ -61,7 +61,7 @@
 	        movieObject.innerHTML = movie['Title'] + " (" + movie['Year'] + ")";
 	        movieObject.setAttribute('class', 'results-list');
 	        movieObject.addEventListener('click', function() {
-	        	showMovieDetails(movie);
+	        	getMovieDetails(movie);
 	        });
 
 	        // appending the html block to the results-list section
@@ -78,22 +78,35 @@
 	    }
 	}
 
-	function showMovieDetails(movieObject) {
-		selectedMovie["name"] = movieObject["Title"];
+	function getMovieDetails(movieObject) {
+		selectedMovie["title"] = movieObject["Title"];
 		selectedMovie["year"] = movieObject["Year"];
 		selectedMovie["imdbID"] = movieObject["imdbID"];
 
+		console.log("hi")
 		// display the title of the movie
-		movieTitle.innerHTML = selectedMovie['Title'] + ' (' + selectedMovie['Year'] + ')';
+		movieTitle.innerHTML = selectedMovie['title'] + ' (' + selectedMovie['year'] + ')';
 		
 		// clear previous result
 		movieDetailsList.innerHTML = "";
 
 		// TO DO: not displaying ALL movie data, but do another query with imbdID
-		
+		var xmlHttpRequest = new XMLHttpRequest;
+		var fullURL = "http://www.omdbapi.com/?i=" + selectedMovie.imdbID + "&plot=short&r=json"
+
+		xmlHttpRequest.onreadystatechange = function() {
+        if (xmlHttpRequest.readyState == XMLHttpRequest.DONE && xmlHttpRequest.status == 200) {
+          searchResults = JSON.parse(xmlHttpRequest.response);
+          displayMovieDetails(searchResults);
+        }
+    };
+    xmlHttpRequest.open("GET", fullURL, true);
+    xmlHttpRequest.send();
+	}
+
+	function displayMovieDetails(movieObject) {
 		//create table row for each piece of data
 		for (var key in movieObject) {
-
 			// rows
 			var movieDetailsRow = document.createElement('tr');
 			movieDetailsList.appendChild(movieDetailsRow);
