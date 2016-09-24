@@ -8,8 +8,14 @@ div {
   border-radius: 7px;
 }
 
-.container {
-  display: flex;
+button {
+  width: 120px;
+  background-color: white;
+  color: #52B3D9;
+  border: none;
+  border-radius: 3px;
+  font-size: 14px;
+  margin: 0px 10px 10px 10px;
 }
 
 ul {
@@ -32,40 +38,36 @@ td {
   border: 1px solid grey;
 }
 
+h1 {
+  padding-top: 20px;
+}
+
 .header {
-  width: 90%;
+  background-color: #52B3D9;
+  color: white;
+  height: 160px;
+  width: 100%;
   text-align: center;
   margin-bottom: 30px;
 }
 
-#text-field {
-  width: 80%;
-  height: 25px;
-  border: 1px solid grey;
-  display: inline-block;
-}
-
-#buttons {
-  display: inline;
-  width: 250px;
-  height: 2em;
-  margin-left: 20px;
-  margin-right: 20px;
-  font-size: 18px;
+.container {
+  display: flex;
 }
 
 .left {
-  background-color: #2ecc71;
-  width: 25%;
+  background-color: #52B3D9;
+  color: white;
+  width: 30%;
   min-height: 500px;
   float: left;
   padding-left: 15px;
 }
 
 .right {
-  border: 3px solid #2ecc71;
+  border: 3px solid #52B3D9;
   display: inline-block;
-  width: 55%;
+  width: 70%;
   min-height: 500px;
   float: left;
   margin-left: 20px;
@@ -73,7 +75,7 @@ td {
 
 .left li:hover{
   cursor: pointer;
-  color: white;
+  color: black;
   text-decoration: underline;
 }
 
@@ -85,6 +87,24 @@ td {
   width: 65%;
 }
 
+#text-field {
+  display: inline-block;
+  width: 80%;
+  height: 25px;
+  margin-bottom: 20px;
+  vertical-align: center;
+  border: 3px solid #52B3D9;
+  border-radius: 2px;
+}
+
+#buttons {
+  display: inline;
+  width: 250px;
+  height: 2em;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
 #results-list {
   list-style-type: none;
 }
@@ -93,8 +113,5 @@ td {
   text-align: center;
 }
 
-#key {
-  width: 15%;
-}
 
 
