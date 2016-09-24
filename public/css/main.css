@@ -92,9 +92,8 @@ h1 {
   width: 80%;
   height: 25px;
   margin-bottom: 20px;
-  vertical-align: center;
-  border: 3px solid #52B3D9;
-  border-radius: 2px;
+  border: 3px solid white;
+  border-radius: 7px;
 }
 
 #buttons {
