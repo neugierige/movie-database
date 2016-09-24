@@ -1,6 +1,8 @@
 require 'sinatra'
 require 'json'
 
+
+
 get '/' do 
 # 'do' is a command that executes the code that follows
   File.read('views/index.html')
@@ -24,5 +26,5 @@ post '/favorites' do
   movie = { name: params[:name], oid: params[:oid] }
   file << movie
   File.write('data.json',JSON.pretty_generate(file))
-  movie.to_json
+
 end

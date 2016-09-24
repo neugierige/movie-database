@@ -1,4 +1,3 @@
-/* Common Styles */
 body {
   margin: 30px;
   font-family: Helvetica, sans-serif;
@@ -9,9 +8,25 @@ div {
   border-radius: 7px;
 }
 
-table, tr, td {
+ul {
+  padding: 5px;
+}
+
+li {
+  margin-bottom: 7px;
+}
+
+/*NOT WORKING*/
+table {
+  table-layout: fixed;
+  margin: 5px;
   border: 1px, solid, grey;
   border-collapse: collapse;
+}
+
+/*NOT WORKING*/
+td {
+  word-wrap: break-word;
 }
 
 .header {
@@ -38,7 +53,6 @@ table, tr, td {
 }
 
 .left {
-  
   border: 1px solid blue;
   width: 25%;
   min-height: 700px;
@@ -53,20 +67,6 @@ table, tr, td {
   min-height: 700px;
   float: left;
   margin-left: 20px;
-}
-
-/*NOT WORKING!!!*/
-.right button {
-  text-align: center;
-  display: inline-block;
-}
-
-ul {
-  padding: 5px;
-}
-
-li {
-  margin-bottom: 7px;
 }
 
 .left li:hover{

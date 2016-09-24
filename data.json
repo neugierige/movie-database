@@ -1,8 +1,14 @@
 {
-	"favorites": [
-	],
-
-	"title": "Star Wars",
-	"year": "1983",
-	"imdbID": "tt0251413"
+"Star Wars": "tt0251413"
 }
+
+
+
+// {
+// 	"favorites": [
+// 	],
+
+// 	"title": "Star Wars",
+// 	"year": "1983",
+// 	"imdbID": "tt0251413"
+// }

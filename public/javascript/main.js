@@ -89,6 +89,15 @@
 		// clear previous result
 		movieDetailsList.innerHTML = "";
 
+		// create the favorite button
+		var addFavButton = document.createElement('button');
+		addFavButton.appendChild(document.createTextNode('Save to Favorites'));
+		addFavButton.addEventListener('click', function() {
+			console.log(selectedMovie);
+			addToFavorites();
+		});
+		movieDetailsList.appendChild(addFavButton);
+
 		// TO DO: not displaying ALL movie data, but do another query with imbdID
 		var xmlHttpRequest = new XMLHttpRequest;
 		var fullURL = "http://www.omdbapi.com/?i=" + selectedMovie.imdbID + "&plot=short&r=json"
@@ -109,6 +118,7 @@
 			// rows
 			var movieDetailsRow = document.createElement('tr');
 			movieDetailsList.appendChild(movieDetailsRow);
+
 			// cells for key and value
 			var movieDetailsKeyCell = document.createElement('td'),
 				movieDetailsValueCell = document.createElement('td'),
@@ -121,24 +131,23 @@
 		}
 	}
 
-	function addToFavorites(movieObject) {
+	function addToFavorites() {
 		var xmlHttpRequest = new XMLHttpRequest
 
 		xmlHttpRequest.onreadystatechange = function() {
-	    	if (xmlHttpRequest.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-	        	var response = JSON.parse(xmlHttpRequest.responseText);
-		        if (response.error == "duplicate") {
-		          alert(title + " has already been added to your list of favorites!");
-		        }
-		    }
+    	if (xmlHttpRequest.readyState == XMLHttpRequest.DONE && XMLHttpRequest.status == 200) {
+        	var response = JSON.parse(xmlHttpRequest.responseText);
+	        if (response.error == "duplicate") {
+	          alert(title + " has already been added to your list of favorites!");
+	        }
 	    }
-
-	    xmlHttpRequest.open("POST", '/favorites', true);
-	    xmlHttpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	    var data = "&oid=" + movieObject.imdbID;
-	    xmlHttpRequest.send(data);
+	  }
+    xmlHttpRequest.open("POST", '/favorites', true);
+    xmlHttpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    var data = "name=" + selectedMovie.title + "&oid=" + selectedMovie.imdbID;
+    console.log(data);
+    xmlHttpRequest.send(data);
 	}
-
 
 	function getFavorites() {
 		var xmlHttpRequest = new XMLHttpRequest;
@@ -147,7 +156,7 @@
 	          var favoritedMovies = JSON.parse(xmlHttpRequest.response);
 	          if (favoritedMovies) {
 	          	console.log(favoritedMovies);
-	          	showResults(favoritedMovies);	
+	          	showFavorites(favoritedMovies);	
 	          } else {
 	          	alert('Add some favorites!');
 	          }
@@ -163,11 +172,11 @@
 		resultsList.innerHTML = "";
 	}
 
-	// function showFavorites(favoritedMovies) {
-	// 	if (favoritedMovies) {
-
-	// 	}
-	// }
+	function showFavorites(favoritedMovies) {
+		if (favoritedMovies) {
+			console.log(favoritedMovies);
+		}
+	}
 
 	// function showResults(searchResults) {
 	// 	var movieObject;
