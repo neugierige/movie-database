@@ -101,7 +101,7 @@
 
 		// TO DO: not displaying ALL movie data, but do another query with imbdID
 		var xmlHttpRequest = new XMLHttpRequest;
-		var fullURL = "http://www.omdbapi.com/?i=" + selectedMovie.imdbID + "&plot=short&r=json"
+		var fullURL = "https://www.omdbapi.com/?i=" + selectedMovie.imdbID + "&plot=short&r=json"
 
 		xmlHttpRequest.onreadystatechange = function() {
         if (xmlHttpRequest.readyState == XMLHttpRequest.DONE && xmlHttpRequest.status == 200) {
