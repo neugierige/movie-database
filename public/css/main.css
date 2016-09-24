@@ -8,6 +8,10 @@ div {
   border-radius: 7px;
 }
 
+.container {
+  display: flex;
+}
+
 ul {
   padding: 5px;
 }
@@ -53,7 +57,7 @@ td {
 .left {
   background-color: #2ecc71;
   width: 25%;
-  min-height: 700px;
+  min-height: 500px;
   float: left;
   padding-left: 15px;
 }
@@ -62,7 +66,7 @@ td {
   border: 3px solid #2ecc71;
   display: inline-block;
   width: 55%;
-  min-height: 700px;
+  min-height: 500px;
   float: left;
   margin-left: 20px;
 }

@@ -1,15 +1,16 @@
 (function(){
 
-	// initializing variables that reference things in the HTML
+	// initializing variables that reference elements in the HTML
 	var textField = document.getElementById('text-field'),
 			searchButton = document.getElementById('search-button'),
 			showfavsButton = document.getElementById('show-favorites-button'),
+			rightDiv = document.getElementsByClassName('right');
 			resultsList = document.getElementById('results-list'),
 			movieTitle = document.getElementById('movie-title'),
-			// addFavButton = document.getElementById('add-favorite-button'),
 			movieDetailsList = document.getElementById('movie-details'),
 			apiURLPrefix = 'https://www.omdbapi.com/?s=';
 
+	// a global variable for the movie that was most recently selected by user
 	var selectedMovie = {};
 
 	// make sure buttons are found, if so 
@@ -18,16 +19,16 @@
 	if (searchButton, showfavsButton) {
 		searchButton.addEventListener('click', doSearch);
 		showfavsButton.addEventListener('click', getFavorites);	
-		// addFavButton.addEventListener('click', addToFavorites);
 	} else {
 		console.log("button not found")
 	}
 
-	function doSearch(click_event) {
+	// 
+	function doSearch(clickEvent) {
 		// clears the results from previous search
 		clearResultsList()
 		searchFieldInput = textField.value;
-		click_event.preventDefault();
+		clickEvent.preventDefault();
 		if (searchFieldInput === "") {
 			// alert view that says "put enter a search term" 
 		} else {
@@ -55,7 +56,7 @@
 
 	    	// perform the following for each result
 	      searchResults.forEach(function (movie) {
-	      	console.log('my movie is ' + movie.title);
+	      	console.log('my movie is ' + movie);
 	      	elementForResult = document.createElement('li');
 
 	        // adding the title to the list of results
@@ -94,7 +95,6 @@
 		var addFavButton = document.createElement('button');
 		addFavButton.appendChild(document.createTextNode('Save to Favorites'));
 		addFavButton.addEventListener('click', function() {
-			console.log(selectedMovie);
 			addToFavorites();
 		});
 		movieDetailsList.appendChild(addFavButton);
@@ -119,16 +119,30 @@
 			// rows
 			var movieDetailsRow = document.createElement('tr');
 			movieDetailsList.appendChild(movieDetailsRow);
-
-			// cells for key and value
+			// cells
 			var movieDetailsKeyCell = document.createElement('td'),
 				movieDetailsValueCell = document.createElement('td'),
 				keyText = document.createTextNode(key),
 				valueText = document.createTextNode(movieObject[key]);
-			movieDetailsKeyCell.appendChild(keyText);
-			movieDetailsValueCell.appendChild(valueText);
+
+
+			// append the string literal for key to a cell
+			movieDetailsKeyCell.appendChild(keyText);	
+
+			// append the value to a cell, but handle poster images differently
+			if (key === 'Poster' && movieObject['Poster'] != 'N/A') {
+				console.log('I got an image!');
+				var moviePoster = document.createElement('img');
+				moviePoster.setAttribute('src', movieObject['Poster']);
+				moviePoster.setAttribute('width', '50%');
+				movieDetailsValueCell.appendChild(moviePoster);
+			} else {
+				movieDetailsValueCell.appendChild(valueText);
+			}
+
+			// append the cells to the row
 			movieDetailsRow.appendChild(movieDetailsKeyCell);
-			movieDetailsRow.appendChild(movieDetailsValueCell);
+			movieDetailsRow.appendChild(movieDetailsValueCell);			
 		}
 	}
 
@@ -156,7 +170,7 @@
       if (xmlHttpRequest.readyState == XMLHttpRequest.DONE && xmlHttpRequest.status == 200) {
         var favoritedMovies = JSON.parse(xmlHttpRequest.response);
         if (favoritedMovies) {
-        	console.log(favoritedMovies);
+        	console.log("favorited movies are: "+favoritedMovies.last);
         	clearResultsList()
         	showResults(favoritedMovies.favorites);	
         } else {
