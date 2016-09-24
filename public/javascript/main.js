@@ -39,10 +39,10 @@
 	function apiRequest(url) {
 		var xmlHttpRequest = new XMLHttpRequest();
 		xmlHttpRequest.onreadystatechange = function() {
-	        if (xmlHttpRequest.readyState == XMLHttpRequest.DONE && xmlHttpRequest.status == 200) {
-	           searchResults = JSON.parse(xmlHttpRequest.response)['Search'];
-	          showResults(searchResults);
-	        }
+	      if (xmlHttpRequest.readyState == XMLHttpRequest.DONE && xmlHttpRequest.status == 200) {
+	         searchResults = JSON.parse(xmlHttpRequest.response)['Search'];
+	        showResults(searchResults);
+	      }
 	    };
 	    xmlHttpRequest.open("GET", url, true);
 	    xmlHttpRequest.send();
@@ -132,7 +132,7 @@
 	}
 
 	function addToFavorites() {
-		var xmlHttpRequest = new XMLHttpRequest
+		var xmlHttpRequest = new XMLHttpRequest;
 
 		xmlHttpRequest.onreadystatechange = function() {
     	if (xmlHttpRequest.readyState == XMLHttpRequest.DONE && XMLHttpRequest.status == 200) {
@@ -142,7 +142,7 @@
 	        }
 	    }
 	  }
-    xmlHttpRequest.open("POST", '/favorites', true);
+    xmlHttpRequest.open('POST', '/favorites', true);
     xmlHttpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     var data = "name=" + selectedMovie.title + "&oid=" + selectedMovie.imdbID;
     console.log(data);
@@ -152,19 +152,19 @@
 	function getFavorites() {
 		var xmlHttpRequest = new XMLHttpRequest;
 		xmlHttpRequest.onreadystatechange = function() {
-	        if (xmlHttpRequest.readyState == XMLHttpRequest.DONE && xmlHttpRequest.status == 200) {
-	          var favoritedMovies = JSON.parse(xmlHttpRequest.response);
-	          if (favoritedMovies) {
-	          	console.log(favoritedMovies);
-	          	showFavorites(favoritedMovies);	
-	          } else {
-	          	alert('Add some favorites!');
-	          }
-	          
-	        }
-	    };
-	    xmlHttpRequest.open("GET", "/favorites", true);
-	    xmlHttpRequest.send();
+      if (xmlHttpRequest.readyState == XMLHttpRequest.DONE && xmlHttpRequest.status == 200) {
+        var favoritedMovies = JSON.parse(xmlHttpRequest.response);
+        if (favoritedMovies) {
+        	console.log(favoritedMovies);
+        	showFavorites(favoritedMovies);	
+        } else {
+        	alert("Add some favorites!");
+        }
+        
+      }
+	  };
+  xmlHttpRequest.open("GET", "/favorites", true);
+  xmlHttpRequest.send();
 	}
 
 

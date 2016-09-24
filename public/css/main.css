@@ -16,17 +16,16 @@ li {
   margin-bottom: 7px;
 }
 
-/*NOT WORKING*/
 table {
-  table-layout: fixed;
-  margin: 5px;
-  border: 1px, solid, grey;
+  table-layout: auto;
+  margin: 2%;
   border-collapse: collapse;
+  width: 95%;
 }
 
-/*NOT WORKING*/
 td {
   word-wrap: break-word;
+  border: 1px solid grey;
 }
 
 .header {
@@ -42,7 +41,6 @@ td {
   display: inline-block;
 }
 
-/*NOT WORKING???*/
 #buttons {
   display: inline;
   width: 250px;
@@ -53,15 +51,15 @@ td {
 }
 
 .left {
-  border: 1px solid blue;
+  background-color: #2ecc71;
   width: 25%;
   min-height: 700px;
   float: left;
-  padding-left: 5px;
+  padding-left: 15px;
 }
 
 .right {
-  border: 1px dashed red;
+  border: 3px solid #2ecc71;
   display: inline-block;
   width: 55%;
   min-height: 700px;
@@ -71,8 +69,16 @@ td {
 
 .left li:hover{
   cursor: pointer;
-  color: blue;
+  color: white;
   text-decoration: underline;
+}
+
+.key {
+  width: 35%;
+}
+
+.value {
+  width: 65%;
 }
 
 #results-list {
@@ -83,6 +89,8 @@ td {
   text-align: center;
 }
 
-
+#key {
+  width: 15%;
+}
 
 
