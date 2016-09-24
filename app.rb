@@ -21,8 +21,8 @@ post '/favorites' do
     return 'Invalid Request'
   end
   # 'unless' opens a conditional block that needs to be closed with an 'end'
-  movie = {params[:name], params[:oid]}
-  file['favorites'].append(movie)
+  movie = {Title: params[:name], Year: params[:year], imbdID: params[:oid] }
+  file['favorites'].push(movie)
   File.write(datafile,JSON.pretty_generate(file))
-  movie.to_json
+  file.to_json  
 end

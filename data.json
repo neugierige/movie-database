@@ -1,5 +1,14 @@
 {
-	"favorites": [
-  		{"title": "Star Wars", "year": "1983", "imdbID": "tt0251413"}
-  	]
+  "favorites": [
+    {
+      "Title": "Star Wars",
+      "Year": "1983",
+      "imdbID": "tt0251413"
+    },
+    {
+      "Title": "Local Hero",
+      "Year": "1983",
+      "imdbID": "tt0085859"
+    }
+  ]
 }

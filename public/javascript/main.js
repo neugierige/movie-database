@@ -55,6 +55,7 @@
 
 	    	// perform the following for each result
 	      searchResults.forEach(function (movie) {
+	      	console.log('my movie is ' + movie.title);
 	      	elementForResult = document.createElement('li');
 
 	        // adding the title to the list of results
@@ -144,7 +145,7 @@
 	  }
     xmlHttpRequest.open('POST', '/favorites', true);
     xmlHttpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    var data = "name=" + selectedMovie.title + "&oid=" + selectedMovie.imdbID;
+    var data = "Title=" + selectedMovie.title + "&Year=" + selectedMovie.year + "&imdbID=" + selectedMovie.imdbID;
     console.log(data);
     xmlHttpRequest.send(data);
 	}
@@ -156,57 +157,22 @@
         var favoritedMovies = JSON.parse(xmlHttpRequest.response);
         if (favoritedMovies) {
         	console.log(favoritedMovies);
-        	showFavorites(favoritedMovies);	
+        	clearResultsList()
+        	showResults(favoritedMovies.favorites);	
         } else {
         	alert("Add some favorites!");
         }
-        
       }
 	  };
   xmlHttpRequest.open("GET", "/favorites", true);
   xmlHttpRequest.send();
 	}
 
-
 	function clearResultsList() {
 		resultsList.innerHTML = "";
 	}
 
-	function showFavorites(favoritedMovies) {
-		if (favoritedMovies) {
-			console.log(favoritedMovies);
-		}
-	}
 
-	// function showResults(searchResults) {
-	// 	var movieObject;
-	//     // if there are results at all...
-	//     if (searchResults) {
-
-	//     	// perform the following for each result
-	//       searchResults.forEach(function (movie) {
-	//         movieObject = document.createElement('li');
-
-	//         // adding the title to the list of results
-	//         movieObject.innerHTML = movie['Title'] + " (" + movie['Year'] + ")";
-	//         movieObject.setAttribute('class', 'results-list');
-	//         movieObject.addEventListener('click', function() {
-	//         	showMovieDetails(movie);
-	//         });
-
-	//         // appending the html block to the results-list section
-	//         resultsList.appendChild(movieObject);
-
-	//       });
-
-	//     // if there are no results
-	//     } else {
-	//       // NB: p is used here because it is styled differently than a li
-	//       movieObject = document.createElement('p');
-	//       movieObject.innerHTML = "Please try again";
-	//       resultsList.appendChild();
-	//     }
-	// }
 
 
 
