@@ -22,12 +22,11 @@
 	showfavsButton.addEventListener('click', getFavorites);	
 
 	// get the current list of favorites
-	window.onload = function() {
-		getFavorites()
-	};
+	window.onload = updateCurrentFavorites();
 
 	// GENERIC function that handles GET requests
 	function apiRequest(url, genericFn, parameter) {
+		console.log('passed things are: ' + url + ", " + parameter);
 		var xmlHttpRequest = new XMLHttpRequest();
 		xmlHttpRequest.onreadystatechange = function() {
 	      if (xmlHttpRequest.readyState == XMLHttpRequest.DONE && xmlHttpRequest.status == 200) {
@@ -122,9 +121,8 @@
 
 		// maybe create the favorite button??
 		// ~~~~~NOT WORKING 
-		// if (!isFavorited && !checkFavorited(currentFavorites, movieObject)) {
-		// ~~~~~
-		if (!isFavorited) {
+		// currentFavorites is "undefined"
+		if (!checkFavorited(currentFavorites, movieObject)) {
 			var addFavButton = document.createElement('button');
 			addFavButton.appendChild(document.createTextNode('Save to Favorites'));
 			addFavButton.setAttribute('id', 'addFav-Button');
