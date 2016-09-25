@@ -23,7 +23,6 @@
 	// get the current list of favorites
 	window.onload = function() {
 		getFavorites()
-		console.log(currentFavorites);
 	};
 
 	// GENERIC function that handles GET requests
@@ -39,7 +38,6 @@
 	        		isFavorited = false;
 	        	} else {
 	        		leftHeader.innerHTML = 'Favorites';
-	        		currentFavorites = results['favorites'];
 	        		isFavorited = true;
 	        	}
 	        } else {
@@ -118,6 +116,8 @@
 			});
 			rightHeader.removeChild(rightHeader.lastChild);
 			rightHeader.appendChild(addFavButton);
+		} else {
+			rightHeader.removeChild(rightHeader.lastChild);
 		}
 		
 		var fullURL = "https://www.omdbapi.com/?i=" + selectedMovie.imdbID + "&plot=short&r=json";
@@ -176,10 +176,7 @@
 	textField.onkeyup = function(keyup) {
 		if (keyup.keyCode === 13){
 			doSearch(keyup);
-			console.log('enter key');
-		} else {
-			console.log('not the enter key');
-		}
+		} 
 	}
 
 }());
