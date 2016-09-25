@@ -4,6 +4,26 @@
       "Title": "Star Wars",
       "Year": "1983",
       "imdbID": "tt0251413"
+    },
+    {
+      "Title": "The Hunger Games",
+      "Year": "2012",
+      "imdbID": "tt1392170"
+    },
+    {
+      "Title": "The Godfather",
+      "Year": "1972",
+      "imdbID": "tt0068646"
+    },
+    {
+      "Title": "Mean Girls",
+      "Year": "2004",
+      "imdbID": "tt0377092"
+    },
+    {
+      "Title": "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb",
+      "Year": "1964",
+      "imdbID": "tt0057012"
     }
   ]
 }

@@ -1,6 +1,6 @@
 (function(){
 
-	// initializing variables that reference elements in the HTML
+// initializing variables that reference elements in the HTML
 	var textField = document.getElementById('text-field'),
 			searchButton = document.getElementById('search-button'),
 			showfavsButton = document.getElementById('show-favorites-button'),
@@ -13,6 +13,9 @@
 
 	// a global variable for the movie that was most recently selected by user
 	var selectedMovie = {};
+	// a global variable to track if the selected movie is in the favorites list
+	var isFavorited = false;
+	var searchResults = [];
 
 	// add event listeners that detect clicks from the user
 	// and then perform the associated function
@@ -29,8 +32,10 @@
 	        	results = JSON.parse(xmlHttpRequest.response)[parameter];	
 	        	if (parameter == 'Search') {
 	        		leftHeader.innerHTML = 'Search Results';
+	        		isFavorited = false;
 	        	} else {
 	        		leftHeader.innerHTML = 'Favorites';
+	        		isFavorited = true;
 	        	}
 	        } else {
 	        	results = JSON.parse(xmlHttpRequest.response);
@@ -43,16 +48,17 @@
 	}
 
 	// GENERIC function that displays results in the left-side div
-	function showResults(searchResults) {
+	function showResults(results) {
 		clearResultsList();
 
     // if there are results at all...
-    if (searchResults) {
+    if (results) {
+    	searchResults = results
 			var elementForResult;
     	
     	// perform the following for each result
-      searchResults.forEach(function (movie) {
-      	console.log('my movie is ' + movie);
+      results.forEach(function (movie) {
+      	console.log('my movie is ' + movie['Title']);
       	elementForResult = document.createElement('li');
 
         // adding the title to the list of results
@@ -68,14 +74,12 @@
 
     // if there are no results
     } else {
-
       // NB: p is used here because it is styled differently than a li
-      elementForResult = document.createElement('p');
-      elementForResult.innerHTML = "Please try again.";
-      resultsList.appendChild(elementForResult);
+      // elementForResult = document.createElement('p');
+      // elementForResult.innerHTML = "Please try again.";
+      // resultsList.appendChild(elementForResult);
     }
 	}
-
 
 
 
@@ -96,6 +100,15 @@
 		}
 	}
 
+	function checkFavorited(movieObject) {
+		searchResults.forEach(function (movie) {
+			if (movieObject.imdbID == movie['imdbID']) {
+				return true;
+			}
+			return false; 
+		});
+	}
+
 	// gets full details on a movie based on its unique imdbID
 	function getMovieDetails(movieObject) {
 
@@ -108,24 +121,24 @@
 		movieTitle.innerHTML = selectedMovie.title + ' (' + selectedMovie.year + ')';
 		movieDetailsList.innerHTML = "";
 
-		// create the favorite button
-		var addFavButton = document.createElement('button');
-		//~~~~~~~~ TO DO ~~~~~~~~ 
-		//~~~~~~~~~~~~~~~~ 
-		// check if movie is already favorited
-		addFavButton.appendChild(document.createTextNode('Save to Favorites'));
-		//~~~~~~~~~~~~~~~~ 
-		//~~~~~~~~~~~~~~~~ 
-		addFavButton.addEventListener('click', function() {
-			addToFavorites();
-		});
-		movieDetailsList.appendChild(addFavButton);
-
+		// maybe create the favorite button??
+		if (checkFavorited(movieObject) === false) {
+			var addFavButton = document.createElement('button');
+			addFavButton.appendChild(document.createTextNode('Save to Favorites'));
+			addFavButton.addEventListener('click', function() {
+				addToFavorites();
+			});
+			movieDetailsList.appendChild(addFavButton);
+		} else {
+			console.log('NOT adding the favorite button');
+		}
 		
 		var fullURL = "https://www.omdbapi.com/?i=" + selectedMovie.imdbID + "&plot=short&r=json";
 		apiRequest(fullURL, displayMovieDetails, null);
     
 	}
+
+
 
 	function displayMovieDetails(movieObject) {
 		//create table row for each piece of data
@@ -158,22 +171,11 @@
 
 	function addToFavorites() {
 		var xmlHttpRequest = new XMLHttpRequest;
-
-		xmlHttpRequest.onreadystatechange = function() {
-    	if (xmlHttpRequest.readyState == XMLHttpRequest.DONE && XMLHttpRequest.status == 200) {
-        	var response = JSON.parse(xmlHttpRequest.responseText);
-					//~~~~~~~~  TO DO ~~~~~~~~ 
-        	//~~~~~~~~~~~~~~~~
-        	// check if selectedMovie has already been favorited 
-	        // if (checkFavorited == true) {
-	        //   alert(title + " has already been added to your list of favorites!");
-	        // }
-	    }
-	  }
     xmlHttpRequest.open('POST', '/favorites', true);
     xmlHttpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     var data = "Title=" + selectedMovie.title + "&Year=" + selectedMovie.year + "&imdbID=" + selectedMovie.imdbID;
     xmlHttpRequest.send(data);
+    alert(selectedMovie.title + ' has been added to favorites');
 	}
 
 	function getFavorites() {
@@ -184,12 +186,6 @@
 	function clearResultsList() {
 		resultsList.innerHTML = "";
 	}
-
-	function checkDuplicate() {
-		// return ( statement here );
-	}
-
-
 
 
 
