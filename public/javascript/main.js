@@ -25,15 +25,6 @@
 	// get the current list of favorites
 	window.onload = function() {
 		getFavorites()
-		// var xmlHttpRequest = new XMLHttpRequest();
-		// xmlHttpRequest.onreadystatechange = function() {
-		// 	if (xmlHttpRequest.readyState == XMLHttpRequest.DONE && xmlHttpRequest.status == 200) {
-	 //        currentFavorites = JSON.parse(xmlHttpRequest.response)['favorites'];
-	 //      }
-		// }
-		// var url = '/favorites'
-		// xmlHttpRequest.open('GET', url, true);
-	 //  xmlHttpRequest.send();
 		console.log(currentFavorites);
 	};
 
@@ -179,7 +170,7 @@
     xmlHttpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     var data = "Title=" + selectedMovie.title + "&Year=" + selectedMovie.year + "&imdbID=" + selectedMovie.imdbID;
     xmlHttpRequest.send(data);
-    alert(selectedMovie.title + ' is in the favorites!');
+    rightHeader.lastChild.innerHTML = 'Saved!';
 	}
 
 	function getFavorites() {

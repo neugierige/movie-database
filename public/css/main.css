@@ -38,7 +38,8 @@ table {
 
 td {
   word-wrap: break-word;
-  border: 1px solid grey;
+  border: 2px solid white;
+  background-color: #ECECEC;
 }
 
 h1 {
@@ -99,7 +100,7 @@ h1 {
   border-radius: 7px;
 }
 
-#buttons {
+#buttons-block {
   display: inline;
   width: 250px;
   height: 2em;
@@ -113,6 +114,11 @@ h1 {
 
 #right-header {
   text-align: center;
+}
+
+#movie-title {
+  margin-left: 15%;
+  margin-right: 15%;
 }
 
 #addFav-Button {
