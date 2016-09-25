@@ -15,12 +15,27 @@
 	var selectedMovie = {};
 	// a global variable to track if the selected movie is in the favorites list
 	var isFavorited = false;
-	var searchResults = [];
+	var currentFavorites = [];
 
 	// add event listeners that detect clicks from the user
 	// and then perform the associated function
 	searchButton.addEventListener('click', doSearch);
 	showfavsButton.addEventListener('click', getFavorites);	
+
+	// get the current list of favorites
+	window.onload = function() {
+		getFavorites()
+		// var xmlHttpRequest = new XMLHttpRequest();
+		// xmlHttpRequest.onreadystatechange = function() {
+		// 	if (xmlHttpRequest.readyState == XMLHttpRequest.DONE && xmlHttpRequest.status == 200) {
+	 //        currentFavorites = JSON.parse(xmlHttpRequest.response)['favorites'];
+	 //      }
+		// }
+		// var url = '/favorites'
+		// xmlHttpRequest.open('GET', url, true);
+	 //  xmlHttpRequest.send();
+		console.log(currentFavorites);
+	};
 
 	// GENERIC function that handles GET requests
 	function apiRequest(url, genericFn, parameter) {
@@ -35,6 +50,7 @@
 	        		isFavorited = false;
 	        	} else {
 	        		leftHeader.innerHTML = 'Favorites';
+	        		currentFavorites = results['favorites'];
 	        		isFavorited = true;
 	        	}
 	        } else {
@@ -50,16 +66,10 @@
 	// GENERIC function that displays results in the left-side div
 	function showResults(results) {
 		clearResultsList();
-
-    // if there are results at all...
     if (results) {
-    	searchResults = results
-			var elementForResult;
-    	
     	// perform the following for each result
       results.forEach(function (movie) {
-      	console.log('my movie is ' + movie['Title']);
-      	elementForResult = document.createElement('li');
+      	var elementForResult = document.createElement('li');
 
         // adding the title to the list of results
         elementForResult.innerHTML = movie['Title'] + " (" + movie['Year'] + ")";
@@ -71,16 +81,13 @@
         // appending the html block to the results-list section
         resultsList.appendChild(elementForResult);
       });
-
-    // if there are no results
     } else {
-      // NB: p is used here because it is styled differently than a li
-      // elementForResult = document.createElement('p');
-      // elementForResult.innerHTML = "Please try again.";
-      // resultsList.appendChild(elementForResult);
-    }
+    	// if no results, displays try again message
+    	elementForResult = document.createElement('p');
+      elementForResult.innerHTML = "Please try again.";
+      resultsList.appendChild(elementForResult);
+    };
 	}
-
 
 
 	// gets & validates user's input, calls function to make http request
@@ -100,12 +107,9 @@
 		}
 	}
 
-	function checkFavorited(movieObject) {
-		searchResults.forEach(function (movie) {
-			if (movieObject.imdbID == movie['imdbID']) {
-				return true;
-			}
-			return false; 
+	function checkFavorited(array, movieObject) {
+		return array.some(function(favorited) {
+			return movieObject === favorited;
 		});
 	}
 
@@ -122,7 +126,8 @@
 		movieDetailsList.innerHTML = "";
 
 		// maybe create the favorite button??
-		if (!isFavorited || checkFavorited(movieObject) === false) {
+		// if (!checkFavorited(currentFavorites, movieObject)) {
+		if (!isFavorited) {
 			var addFavButton = document.createElement('button');
 			addFavButton.appendChild(document.createTextNode('Save to Favorites'));
 			addFavButton.setAttribute('id', 'addFav-Button');
@@ -131,17 +136,13 @@
 			});
 			rightHeader.removeChild(rightHeader.lastChild);
 			rightHeader.appendChild(addFavButton);
-		} else {
-			console.log('NOT adding the favorite button');
 		}
 		
 		var fullURL = "https://www.omdbapi.com/?i=" + selectedMovie.imdbID + "&plot=short&r=json";
 		apiRequest(fullURL, displayMovieDetails, null);
-    
 	}
 
-
-
+	// tells the document how to render the table with movie data
 	function displayMovieDetails(movieObject) {
 		//create table row for each piece of data
 		for (var key in movieObject) {
@@ -171,13 +172,14 @@
 		}
 	}
 
+	// making a POST request to file data file
 	function addToFavorites() {
 		var xmlHttpRequest = new XMLHttpRequest;
     xmlHttpRequest.open('POST', '/favorites', true);
     xmlHttpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     var data = "Title=" + selectedMovie.title + "&Year=" + selectedMovie.year + "&imdbID=" + selectedMovie.imdbID;
     xmlHttpRequest.send(data);
-    alert(selectedMovie.title + ' has been added to favorites');
+    alert(selectedMovie.title + ' is in the favorites!');
 	}
 
 	function getFavorites() {
@@ -188,19 +190,6 @@
 	function clearResultsList() {
 		resultsList.innerHTML = "";
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }());

@@ -37,9 +37,7 @@ post '/favorites' do
   # ADDED FUNCTIONALITY
   # what if this new movie is actually already in our datafile?
   array = file["favorites"]
-  puts "the array is #{array}"
   unless favorited(array, new_movie) == true
-    puts "adding new movie to favs!"
     file['favorites'].push(new_movie)
     File.write(datafile,JSON.pretty_generate(file))
     file.to_json 
