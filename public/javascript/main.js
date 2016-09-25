@@ -7,7 +7,6 @@
 			leftHeader = document.getElementById('left-header'),
 			resultsList = document.getElementById('results-list'),
 			rightHeader = document.getElementById('right-header');
-			movieTitle = document.getElementById('movie-title'),
 			movieDetailsList = document.getElementById('movie-details'),
 			apiURLPrefix = 'https://www.omdbapi.com/?s=';
 
@@ -102,11 +101,17 @@
 		selectedMovie.year = movieObject.Year;
 		selectedMovie.imdbID = movieObject.imdbID;
 
-		// update the display
-		movieTitle.innerHTML = selectedMovie.title + ' (' + selectedMovie.year + ')';
+		// clear out the display
+		rightHeader.innerHTML = "";
 		movieDetailsList.innerHTML = "";
 
-		// maybe create the favorite button??
+		// append the movie title
+		var titleString = movieObject.Title + ' (' + movieObject.Year + ')';
+		var movieTitle = document.createElement('h3');
+		movieTitle.innerHTML = titleString;
+		rightHeader.appendChild(movieTitle);
+		
+		// maybe append the favorite button??
 		if (!isFavorited) {
 			var addFavButton = document.createElement('button');
 			addFavButton.appendChild(document.createTextNode('Save to Favorites'));
@@ -114,10 +119,7 @@
 			addFavButton.addEventListener('click', function() {
 				addToFavorites();
 			});
-			rightHeader.removeChild(rightHeader.lastChild);
 			rightHeader.appendChild(addFavButton);
-		} else {
-			rightHeader.removeChild(rightHeader.lastChild);
 		}
 		
 		var fullURL = "https://www.omdbapi.com/?i=" + selectedMovie.imdbID + "&plot=short&r=json";
@@ -157,26 +159,22 @@
 	// making a POST request to file data file
 	function addToFavorites() {
 		var xmlHttpRequest = new XMLHttpRequest;
-    xmlHttpRequest.open('POST', '/favorites', true);
-    xmlHttpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    var data = "Title=" + selectedMovie.title + "&Year=" + selectedMovie.year + "&imdbID=" + selectedMovie.imdbID;
-    xmlHttpRequest.send(data);
-    rightHeader.lastChild.innerHTML = 'Saved!';
+	    xmlHttpRequest.open('POST', '/favorites', true);
+	    xmlHttpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	    var data = "Title=" + selectedMovie.title + "&Year=" + selectedMovie.year + "&imdbID=" + selectedMovie.imdbID;
+	    xmlHttpRequest.send(data);
+	    rightHeader.lastChild.innerHTML = 'Saved!';
 	}
 
+	// making a GET request for saved favorites
 	function getFavorites() {
 		var url = '/favorites'
 		apiRequest(url, showResults, 'favorites')
 	}
 
+	// 
 	function clearResultsList() {
 		resultsList.innerHTML = "";
-	}
-
-	textField.onkeyup = function(keyup) {
-		if (keyup.keyCode === 13){
-			doSearch(keyup);
-		} 
 	}
 
 }());
