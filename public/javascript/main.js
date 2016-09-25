@@ -15,6 +15,7 @@
 	var selectedMovie = {};
 	// a global variable to track if the selected movie is in the favorites list
 	var isFavorited = false;
+	var currentFavorites = [];
 
 	// add event listeners that detect clicks from the user and perform function
 	searchButton.addEventListener('click', doSearch);
@@ -39,6 +40,7 @@
 	        	} else {
 	        		leftHeader.innerHTML = 'Favorites';
 	        		isFavorited = true;
+	        		currentFavorites = results['favorites'];
 	        	}
 	        } else {
 	        	results = JSON.parse(xmlHttpRequest.response);
@@ -94,6 +96,13 @@
 		}
 	}
 
+	//checks if a given movie object is already in the favorites
+	function checkFavorited(array, movieObject) {
+		return array.some(function(favorited) {
+			return movieObject === favorited;
+		});
+	}
+
 	// gets full details on a movie based on its unique imdbID
 	function getMovieDetails(movieObject) {
 
@@ -105,8 +114,16 @@
 		// update the display
 		movieTitle.innerHTML = selectedMovie.title + ' (' + selectedMovie.year + ')';
 		movieDetailsList.innerHTML = "";
+		
+		//NOT WORKING, doesn't return as true
+		if (rightHeader.childNodes.length === 2) {
+			rightHeader.removeChild(rightHeader.lastChild);
+		}
 
 		// maybe create the favorite button??
+		// ~~~~~NOT WORKING 
+		// if (!isFavorited && !checkFavorited(currentFavorites, movieObject)) {
+		// ~~~~~
 		if (!isFavorited) {
 			var addFavButton = document.createElement('button');
 			addFavButton.appendChild(document.createTextNode('Save to Favorites'));
@@ -116,9 +133,7 @@
 			});
 			rightHeader.removeChild(rightHeader.lastChild);
 			rightHeader.appendChild(addFavButton);
-		} else {
-			rightHeader.removeChild(rightHeader.lastChild);
-		}
+		} 
 		
 		var fullURL = "https://www.omdbapi.com/?i=" + selectedMovie.imdbID + "&plot=short&r=json";
 		apiRequest(fullURL, displayMovieDetails, null);
