@@ -111,9 +111,15 @@ h1 {
   list-style-type: none;
 }
 
-#movie-title {
+#right-header {
   text-align: center;
 }
+
+#addFav-Button {
+  width: 200px;
+  font-size: 12px;
+}
+
 
 
 

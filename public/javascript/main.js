@@ -6,7 +6,7 @@
 			showfavsButton = document.getElementById('show-favorites-button'),
 			leftHeader = document.getElementById('left-header'),
 			resultsList = document.getElementById('results-list'),
-			rightDiv = document.getElementsByClassName('right');
+			rightHeader = document.getElementById('right-header');
 			movieTitle = document.getElementById('movie-title'),
 			movieDetailsList = document.getElementById('movie-details'),
 			apiURLPrefix = 'https://www.omdbapi.com/?s=';
@@ -122,13 +122,15 @@
 		movieDetailsList.innerHTML = "";
 
 		// maybe create the favorite button??
-		if (checkFavorited(movieObject) === false) {
+		if (!isFavorited || checkFavorited(movieObject) === false) {
 			var addFavButton = document.createElement('button');
 			addFavButton.appendChild(document.createTextNode('Save to Favorites'));
+			addFavButton.setAttribute('id', 'addFav-Button');
 			addFavButton.addEventListener('click', function() {
 				addToFavorites();
 			});
-			movieDetailsList.appendChild(addFavButton);
+			rightHeader.removeChild(rightHeader.lastChild);
+			rightHeader.appendChild(addFavButton);
 		} else {
 			console.log('NOT adding the favorite button');
 		}
