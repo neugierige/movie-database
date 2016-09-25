@@ -15,10 +15,8 @@
 	var selectedMovie = {};
 	// a global variable to track if the selected movie is in the favorites list
 	var isFavorited = false;
-	var currentFavorites = [];
 
-	// add event listeners that detect clicks from the user
-	// and then perform the associated function
+	// add event listeners that detect clicks from the user and perform function
 	searchButton.addEventListener('click', doSearch);
 	showfavsButton.addEventListener('click', getFavorites);	
 
@@ -82,12 +80,12 @@
 
 
 	// gets & validates user's input, calls function to make http request
-	function doSearch(clickEvent) {
+	function doSearch(event) {
 		// clears the results from previous search
 		clearResultsList()
 
 		// cancels the event if it is cancelable
-		clickEvent.preventDefault();
+		event.preventDefault();
 		
 		searchFieldInput = textField.value;
 		if (searchFieldInput === '') {
@@ -175,5 +173,13 @@
 		resultsList.innerHTML = "";
 	}
 
+	textField.onkeyup = function(keyup) {
+		if (keyup.keyCode === 13){
+			doSearch(keyup);
+			console.log('enter key');
+		} else {
+			console.log('not the enter key');
+		}
+	}
 
 }());

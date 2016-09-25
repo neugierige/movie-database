@@ -21,6 +21,16 @@ button {
   margin: 0px 10px 10px 10px;
 }
 
+input[type=submit] {
+  width: 120px;
+  background-color: white;
+  color: #52B3D9;
+  border: none;
+  border-radius: 3px;
+  font-size: 14px;
+  margin: 0px 10px 10px 10px;
+}
+
 ul {
   padding: 5px;
 }
@@ -101,11 +111,10 @@ h1 {
 }
 
 #buttons-block {
-  display: inline;
-  width: 250px;
+  display: block;
+  text-align: center;
+  width: 100%;
   height: 2em;
-  margin-left: 20px;
-  margin-right: 20px;
 }
 
 #results-list {

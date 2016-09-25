@@ -15,7 +15,6 @@ end
 get '/favorites' do # don't forget the backslash! every character counts
   read_file = File.read(datafile)
   file = JSON.parse(read_file)
-  puts file["favorites"]
   
   response.header['Content-Type'] = 'application/json'
   File.read(datafile)
