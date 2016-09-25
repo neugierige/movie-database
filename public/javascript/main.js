@@ -98,12 +98,6 @@
 		}
 	}
 
-	function checkFavorited(array, movieObject) {
-		return array.some(function(favorited) {
-			return movieObject === favorited;
-		});
-	}
-
 	// gets full details on a movie based on its unique imdbID
 	function getMovieDetails(movieObject) {
 
@@ -117,7 +111,6 @@
 		movieDetailsList.innerHTML = "";
 
 		// maybe create the favorite button??
-		// if (!checkFavorited(currentFavorites, movieObject)) {
 		if (!isFavorited) {
 			var addFavButton = document.createElement('button');
 			addFavButton.appendChild(document.createTextNode('Save to Favorites'));
