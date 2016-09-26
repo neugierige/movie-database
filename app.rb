@@ -41,7 +41,7 @@ post '/favorites' do
     File.write(datafile,JSON.pretty_generate(file))
     file.to_json 
   else
-    halt 400
+    halt 403
   end
 end
 

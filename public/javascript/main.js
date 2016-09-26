@@ -163,7 +163,7 @@
 	    xmlHttpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	    var data = "Title=" + selectedMovie.title + "&Year=" + selectedMovie.year + "&imdbID=" + selectedMovie.imdbID;
 	    xmlHttpRequest.send(data);
-	    rightHeader.lastChild.innerHTML = 'Saved!';
+	    alert(selectedMovie.title + " is in Favorites!");
 	}
 
 	// making a GET request for saved favorites

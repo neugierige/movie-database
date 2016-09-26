@@ -4,6 +4,21 @@
       "Title": "Star Wars",
       "Year": "1983",
       "imdbID": "tt0251413"
+    },
+    {
+      "Title": "The Red Violin",
+      "Year": "1998",
+      "imdbID": "tt0120802"
+    },
+    {
+      "Title": "The Violin Teacher",
+      "Year": "2015",
+      "imdbID": "tt4972904"
+    },
+    {
+      "Title": "Bach Cello Suite #6: Six Gestures",
+      "Year": "1997",
+      "imdbID": "tt0128951"
     }
   ]
 }
