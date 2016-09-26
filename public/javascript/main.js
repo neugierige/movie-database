@@ -6,7 +6,7 @@
 			showfavsButton = document.getElementById('show-favorites-button'),
 			leftHeader = document.getElementById('left-header'),
 			resultsList = document.getElementById('results-list'),
-			rightHeader = document.getElementById('right-header');
+			rightHeader = document.getElementById('right-header'),
 			movieDetailsList = document.getElementById('movie-details'),
 			apiURLPrefix = 'https://www.omdbapi.com/?s=';
 
@@ -20,9 +20,7 @@
 	showfavsButton.addEventListener('click', getFavorites);	
 
 	// get the current list of favorites
-	window.onload = function() {
-		getFavorites()
-	};
+	window.onload = getFavorites;
 
 	// GENERIC function that handles GET requests
 	function apiRequest(url, genericFn, parameter) {
@@ -172,7 +170,7 @@
 		apiRequest(url, showResults, 'favorites')
 	}
 
-	// 
+	// clear out the content from previous movie displayed
 	function clearResultsList() {
 		resultsList.innerHTML = "";
 	}
